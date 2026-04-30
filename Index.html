@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S. M. Mustaqim Billah | Physician-Leader</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2563eb; 
+            --bg-pure: #ffffff;
+            --bg-off: #f9f9fb; 
+            --bg-card: #ffffff;
+            --text-main: #121212; 
+            --text-muted: #64748b;
+            --border: rgba(0, 0, 0, 0.06);
+            --transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+            --radius: 40px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        html { scroll-behavior: smooth; background-color: var(--bg-pure); }
+        body { background-color: var(--bg-pure); color: var(--text-main); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        .container { width: 90%; max-width: 1000px; margin: auto; }
+
+        /* --- LOGO ANIMATION --- */
+        header { padding: 50px 0; border-bottom: 1px solid var(--border); }
+        .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; transition: var(--transition); }
+        .logo:hover { transform: translateX(10px); }
+        .logo img { height: 45px; width: 45px; border-radius: 12px; border: 1.5px solid var(--primary); transition: var(--transition); }
+        .logo:hover img { border-radius: 50%; transform: rotate(15deg); }
+        .logo h2 { font-size: 1rem; color: var(--text-main); font-weight: 800; letter-spacing: 3px; text-transform: uppercase; }
+
+        /* --- ADVANCED REVEAL SYSTEM --- */
+        .reveal { opacity: 0; transform: translateY(50px) scale(0.98); transition: var(--transition); }
+        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
+        
+        /* Stagger Delay for Grids */
+        .stagger-item { opacity: 0; transform: translateY(30px); transition: var(--transition); }
+        .reveal.active .stagger-item { opacity: 1; transform: translateY(0); }
+        .reveal.active .stagger-item:nth-child(1) { transition-delay: 0.1s; }
+        .reveal.active .stagger-item:nth-child(2) { transition-delay: 0.2s; }
+        .reveal.active .stagger-item:nth-child(3) { transition-delay: 0.3s; }
+
+        /* --- HERO ANIMATIONS --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero { min-height: 75vh; display: flex; align-items: center; padding: 80px 0; gap: 60px; }
+        .hero-text { flex: 1.2; animation: slideIn 1.2s ease-out; }
+        .hero-text h1 { font-size: clamp(3.5rem, 8vw, 5.5rem); font-weight: 800; line-height: 0.85; margin-bottom: 25px; letter-spacing: -4px; color: var(--text-main); }
+        
+        .badge { 
+            border: 1.5px solid var(--primary); color: var(--primary); padding: 6px 14px; border-radius: 100px; 
+            font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; 
+            margin-bottom: 20px; display: inline-block;
+            transition: var(--transition);
+        }
+        .badge:hover { background: var(--primary); color: white; transform: scale(1.05); }
+        
+        .hero-img { flex: 0.8; }
+        .hero-img img { 
+            width: 100%; max-width: 360px; aspect-ratio: 1/1; border-radius: 60px; 
+            object-fit: cover; border: 1px solid var(--border); 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.08); 
+            animation: float 6s ease-in-out infinite;
+            transition: var(--transition);
+        }
+        .hero-img img:hover { transform: scale(1.05) rotate(-2deg); box-shadow: 0 40px 80px rgba(37, 99, 235, 0.15); }
+
+        /* --- SECTIONS --- */
+        section { padding: 100px 0 20px; }
+        .section-tag { color: var(--primary); font-weight: 700; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 25px; display: block; transition: var(--transition); }
+        .reveal.active .section-tag { letter-spacing: 8px; }
+        
+        .card { background: var(--bg-card); padding: 50px; border-radius: var(--radius); border: 1px solid var(--border); margin-bottom: 30px; transition: var(--transition); box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+        .card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+
+        /* --- PHILOSOPHY --- */
+        .philosophy-text { font-size: 1.25rem; line-height: 1.8; color: var(--text-main); font-weight: 400; }
+        .philosophy-text span { color: var(--primary); font-weight: 700; display: inline-block; transition: 0.3s; }
+        .philosophy-text span:hover { transform: translateY(-3px); }
+
+        /* --- RESEARCH --- */
+        .research-card { background: linear-gradient(145deg, #ffffff, #f1f5ff); border: 1px solid rgba(37, 99, 235, 0.2); position: relative; overflow: hidden; }
+        .research-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.05), transparent); transition: 0.8s; }
+        .research-card:hover::before { left: 100%; }
+
+        /* --- CARNIVAL SECTION --- */
+        .carnival-section { background: var(--bg-off); border: 1px solid var(--border); padding: 60px; border-radius: 50px; position: relative; overflow: hidden; transition: var(--transition); }
+        .carnival-section:hover { background: #f0f4ff; }
+        .carnival-section::after { 
+            content: "FUTSAL"; position: absolute; bottom: -10px; right: 20px; font-size: 7rem; 
+            font-weight: 900; opacity: 0.04; color: var(--text-main); letter-spacing: -5px; 
+            pointer-events: none; transition: 1.5s;
+        }
+        .carnival-section:hover::after { transform: translateX(-30px) scale(1.1); opacity: 0.08; }
+
+        /* --- EDUCATION --- */
+        .education-track { position: relative; padding-left: 35px; border-left: 2px solid #f1f5f9; margin-left: 15px; }
+        .edu-item { position: relative; margin-bottom: 45px; }
+        .edu-dot { position: absolute; left: -41.5px; top: 0; width: 11px; height: 11px; background: #fff; border: 2px solid var(--text-muted); border-radius: 50%; z-index: 2; transition: 0.5s; }
+        .edu-item:hover .edu-dot { transform: scale(1.5); border-color: var(--primary); }
+        .edu-dot.active { border-color: var(--primary); background: var(--primary); box-shadow: 0 0 15px rgba(37, 99, 235, 0.3); }
+        
+        .edu-card-featured { background: #fff; border: 1px solid var(--primary); padding: 40px !important; border-radius: 30px; }
+        .edu-card-simple { background: var(--bg-off); padding: 25px 35px !important; border: 1px solid var(--border); border-radius: 25px; }
+
+        /* --- GRID & CONTACT --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        
+        .contact-card { background: var(--text-main); color: #fff; padding: 80px 40px; border-radius: 60px; text-align: center; margin-top: 80px; transition: var(--transition); }
+        .contact-card:hover { transform: scale(1.02); }
+        .btn-white { display: inline-block; background: #fff; color: #000; padding: 18px 45px; border-radius: 100px; text-decoration: none; font-weight: 700; margin-top: 25px; transition: var(--transition); position: relative; overflow: hidden; }
+        .btn-white:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(255,255,255,0.2); }
+
+        footer { padding: 80px 0 50px; text-align: center; opacity: 0.6; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+
+        @media (max-width: 768px) {
+            .hero { flex-direction: column-reverse; text-align: center; padding: 40px 0; }
+            .card, .carnival-section { padding: 30px; }
+            .education-track { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="container">
+    <a href="#" class="logo">
+        <img src="img.jpg" alt="Logo">
+        <h2>Portfolio</h2>
+    </a>
+</header>
+
+<main class="container">
+    <section class="hero">
+        <div class="hero-text">
+            <span class="badge">MBBS Final Year | 16th Batch</span>
+            <h1>Mustaqim Billah</h1>
+            <p style="color: var(--text-muted); font-size: 1.2rem; margin-top: 20px; font-weight: 400; line-height: 1.6;">
+            <b style="color: var(--text-main)">Southern Medical College & Hospital.</b>
+            </p>
+        </div>
+        <div class="hero-img">
+            <img src="img.jpg" alt="S. M. Mustaqim Billah">
+        </div>
+    </section>
+
+    <section class="reveal">
+        <span class="section-tag">Ethos</span>
+        <div class="card stagger-item">
+            <h2 style="font-size: 2.5rem; margin-bottom: 25px; letter-spacing: -2px; color: var(--text-main);">Authentic Medicine</h2>
+            <p class="philosophy-text">
+                In a world of professional formalities, I choose <span>Authenticity</span>. I believe that the removal of masks—both for the physician and the patient—is the first step toward true healing. 
+                <br><br>
+                My journey is guided by <span>Integrity, and Self-Reflection</span>. For me, medicine is a commitment to being a grounded human presence in a patient's most vulnerable moments.
+            </p>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <span class="section-tag">RESEARCH PARTICIPANT</span>
+        <div class="card research-card stagger-item">
+            <p style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 12px;">PRINCIPAL INVESTIGATOR</p>
+            <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text-main);">Modified Singer's Alkali Denaturation Test Kit</h3>
+            <p style="color: var(--text-muted); line-height: 1.7;">Developing cost-effective thalassemia screening protocols to make high-level diagnostics accessible in resource-limited clinical settings.</p>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <span class="section-tag">Featured Role</span>
+        <div class="carnival-section stagger-item">
+            <h2 style="font-size: 2.5rem; letter-spacing: -1.5px; margin-bottom: 10px; color: var(--text-main);">CGHS Futsal Carnival</h2>
+            <p style="color: var(--primary); font-weight: 800; font-size: 0.75rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">Core Organizing Committee</p>
+            <p style="color: var(--text-muted); line-height: 1.8; max-width: 750px;">
+                As a Core Member, I helped in the logistical framework and team coordination for the Chittagong Government High School Futsal Carnival. This experience established my foundation in community mobilization and large-scale event strategy.
+            </p>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <span class="section-tag">Advocacy & Leadership</span>
+        <div class="grid">
+            <div class="card stagger-item">
+                <p style="color: var(--primary); font-weight: 800; font-size: 0.65rem; margin-bottom: 12px; letter-spacing: 1px;">BMSS SMCHLC</p>
+                <h3 style="color: var(--text-main);">Former Local Committee Secretary</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Overseeing administrative operations and representing the student body in national medical student initiatives.</p>
+            </div>
+            <div class="card stagger-item">
+                <p style="color: var(--primary); font-weight: 800; font-size: 0.65rem; margin-bottom: 12px; letter-spacing: 1px;">BMSS SMCHLC</p>
+                <h3 style="color: var(--text-main);">Former Local Officer of TSD</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Overseeing training support operations and representing the student body in national medical student initiatives.</p>
+            </div>
+            <div class="card stagger-item">
+                <p style="color: var(--primary); font-weight: 800; font-size: 0.65rem; margin-bottom: 12px; letter-spacing: 1px;">DEBATE</p>
+                <h3 style="color: var(--text-main);">Former Member of CGHSDC</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Refining public persuasion and evidentiary logic at the CGHS Debating Club.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <span class="section-tag">Academic Timeline</span>
+        <h2 style="margin-bottom: 60px; font-size: 2.5rem; letter-spacing: -1.5px;">The Path</h2>
+        <div class="education-track">
+            
+            <div class="edu-item stagger-item">
+                <div class="edu-dot active"></div>
+                <div class="card edu-card-featured">
+                    <span class="edu-year">2020 — Present</span>
+                    <h3 style="color: var(--text-main);">Southern Medical College & Hospital</h3>
+                    <p class="edu-degree">Bachelor of Medicine, Bachelor of Surgery (MBBS)</p>
+                    <div class="edu-meta">
+                        <span>16th Batch</span>
+                        <span style="opacity:0.3;">|</span>
+                        <span>Session 2020-21</span>
+                        <span style="opacity:0.3;">|</span>
+                        <span class="highlight">Final Year</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edu-item stagger-item">
+                <div class="edu-dot"></div>
+                <div class="card edu-card-simple">
+                    <span class="edu-year">2020</span>
+                    <h3 style="color: var(--text-main);">Bakalia Govt College</h3>
+                    <p class="edu-degree">Higher Secondary Certificate (HSC)</p>
+                </div>
+            </div>
+
+            <div class="edu-item stagger-item">
+                <div class="edu-dot"></div>
+                <div class="card edu-card-simple">
+                    <span class="edu-year">2018</span>
+                    <h3 style="color: var(--text-main);">Chittagong Government High School</h3>
+                    <p class="edu-degree">Secondary School Certificate (SSC)</p>
+                </div>
+            </div>
+
+            <div class="edu-item stagger-item">
+                <div class="edu-dot"></div>
+                <div class="card edu-card-simple">
+                    <span class="edu-year">2012 — 2015</span>
+                    <h3 style="color: var(--text-main);">Chittagong Government High School</h3>
+                    <p class="edu-degree">JSC (2015) & PSC (2012)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <span class="section-tag">Identity</span>
+        <div class="card grid stagger-item" style="padding: 40px; background: var(--bg-off);">
+            <div><p style="color: var(--text-muted); font-size: 0.7rem; letter-spacing: 1px; margin-bottom: 5px;">DATE OF BIRTH</p><p style="font-weight: 700;">04.08.2002</p></div>
+            <div><p style="color: var(--text-muted); font-size: 0.7rem; letter-spacing: 1px; margin-bottom: 5px;">FATHER’S NAME</p><p style="font-weight: 700;">Late S. M. Abu Tayeb</p></div>
+            <div><p style="color: var(--text-muted); font-size: 0.7rem; letter-spacing: 1px; margin-bottom: 5px;">MOTHER’S NAME</p><p style="font-weight: 700;">Hosne Ara Begum</p></div>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <div class="contact-card stagger-item">
+            <h2 style="font-size: 2.5rem; letter-spacing: -1px; margin-bottom: 10px;">Let's connect.</h2>
+            <p style="opacity: 0.8;">For research collaborations or clinical inquiries.</p>
+            <a href="mailto:your-email@example.com" class="btn-white">Send Email</a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2026 S. M. MUSTAQIM BILLAH</p>
+</footer>
+
+<script>
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth subtle mouse parallax for hero image
+    document.addEventListener('mousemove', (e) => {
+        const img = document.querySelector('.hero-img img');
+        const moveX = (e.clientX - window.innerWidth/2) * 0.01;
+        const moveY = (e.clientY - window.innerHeight/2) * 0.01;
+        img.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.02)`;
+    });
+</script>
+
+</body>
+</html>
+
